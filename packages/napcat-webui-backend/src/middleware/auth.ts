@@ -8,6 +8,10 @@ import type { WebUiCredentialJson } from '@/napcat-webui-backend/src/types';
 
 // 鉴权中间件
 export async function auth (req: Request, res: Response, next: NextFunction) {
+  // 自建版本：本地部署（仅监听 127.0.0.1）时跳过 WebUI 鉴权
+  if (process.env.NAPCAT_WEBUI_NO_AUTH === '1') {
+    return next();
+  }
   // 判断当前url是否为/login 如果是跳过鉴权
   if (req.url === '/auth/login') {
     return next();

@@ -50,7 +50,8 @@ function AuthChecker ({ children }: { children: React.ReactNode; }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuth) {
+    // 自建版本：跳过登录页跳转（后端已可通过 NAPCAT_WEBUI_NO_AUTH=1 免鉴权）
+    if (false && !isAuth) {
       const search = new URLSearchParams(window.location.search);
       const token = search.get('token');
       let url = '/web_login';

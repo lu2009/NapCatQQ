@@ -79,6 +79,10 @@ export const LogoutHandler: RequestHandler = async (req, res) => {
 
 // 检查登录状态
 export const checkHandler: RequestHandler = async (req, res) => {
+  // 自建版本：跳过 WebUI 鉴权（必须在解析凭证之前，否则无 Authorization 头会直接抛异常）
+  if (process.env.NAPCAT_WEBUI_NO_AUTH === '1') {
+    return sendSuccess(res, null);
+  }
   // 获取请求头中的Authorization
   const authorization = req.headers.authorization;
   // 检查凭证

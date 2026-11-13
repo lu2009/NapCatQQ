@@ -242,14 +242,12 @@ export class PluginLoader {
    * @returns 拒绝原因；通过校验返回 null
    */
   private getRejectReason (pluginId: string, pluginDir: string): string | null {
+    // 自建版本：不再校验“官方插件白名单”，只保留敏感词拦截
     const hit = this.scanSensitiveWords(pluginDir);
-    if (this.isOfficialPlugin(pluginId)) {
-      return null;
-    }
     if (hit) {
       return `sensitive keyword "${hit}"`;
     }
-    return 'not in official plugin whitelist';
+    return null;
   }
 
   /**
